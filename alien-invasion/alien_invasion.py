@@ -34,24 +34,68 @@ class AlienInvasion:
         """Start the main loop for the game"""
         while True:
 
-            # Watch for keyboard and mouse events
-            for event in pygame.event.get():
+            # Check game events
+            self._check_events()
 
-                # If the event type is to quit, exit the application
-                if event.type == pygame.QUIT:
-                    sys.exit()
+            # Update the ship
+            self.ship.update()
 
-            # Redraw the screen during each pass through the loop
-            self.screen.fill(self.settings.bg_color)
-
-            # Add the ship
-            self.ship.blitme()
-            
-            # Make the most recently-drawn screen visible
-            pygame.display.flip()
+            # Update the screen
+            self.update_screen()
 
             # Run the game clock
             self.clock.tick(60)
+
+    def update_screen(self):
+        """Update images on the screen and flip to the new screen"""
+
+        # Redraw the screen during each pass through the loop
+        self.screen.fill(self.settings.bg_color)
+
+        # Add the ship
+        self.ship.blitme()
+
+        # Make the most recently-drawn screen visible
+        pygame.display.flip()
+
+    def _check_events(self):
+        """Respond to keypresses and mouse events"""
+
+        # Watch for keyboard and mouse events
+        for event in pygame.event.get():
+
+            # Handle input events
+            if event.type == pygame.QUIT:
+
+                # Exit the application
+                sys.exit()
+
+            elif event.type == pygame.KEYDOWN:
+                self._check_keydown_events(event)
+
+            elif event.type == pygame.KEYUP:
+                self._check_keyup_events(event)
+
+    def _check_keyup_events(self, event):
+        """Respond to key releases"""
+
+        # If the key is the left or right arrow, stop the ship moving in that direction
+        if event.key == pygame.K_LEFT:
+            self.ship.moving_left = False
+        elif event.key == pygame.K_RIGHT:
+            self.ship.moving_right = False
+
+    def _check_keydown_events(self, event):
+        """Respond to keypresses"""
+
+        # If the key is the left or right arrow, start the ship moving in that direction
+        if event.key == pygame.K_LEFT:
+            self.ship.moving_left = True
+        elif event.key == pygame.K_RIGHT:
+            self.ship.moving_right = True
+        elif event.key == pygame.K_q:
+            sys.exit()
+
 
 if __name__ == "__main__":
 
