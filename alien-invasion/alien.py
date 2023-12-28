@@ -1,18 +1,20 @@
 import pygame
-
+from pygame import Surface
 from pygame.sprite import Sprite
+
+from settings import Settings
 
 
 class Alien(Sprite):
     """A class that represents a single alien in the fleet"""
 
-    def __init__(self, fleet):
+    def __init__(self, settings: Settings, screen: Surface):
         """Initialize the alien and set the starting position"""
 
         super().__init__()
 
-        self.screen = fleet.screen
-        self.settings = fleet.settings
+        self.screen = screen
+        self.settings = settings
 
         # Load the alien image and get the rect
         self.image = pygame.image.load("images/alien.bmp")

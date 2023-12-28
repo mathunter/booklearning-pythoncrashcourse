@@ -1,24 +1,38 @@
 import pygame
+from pygame import Surface
 
 from alien import Alien
+from settings import Settings
 
 
 class AlienFleet:
 
-    def __init__(self, ai_game):
+    def __init__(self, settings: Settings, screen: Surface):
 
-        self.screen = ai_game.screen
-        self.settings = ai_game.settings
+        self.settings = settings
+        self.screen = screen
 
         # Create a group for the aliens and set up the fleet
         self.aliens = pygame.sprite.Group()
         self._create_fleet()
 
-    def draw(self, screen):
-        """Draws the fleet on the screen"""
-        self.aliens.draw(screen)
+    def has_landed(self):
+        """Checks to see if any alien in the fleet has reached the bottom of the scree"""
+        for alien in self.aliens.sprites():
+            if alien.rect.bottom >= self.settings.screen_height:
+                return True
 
-    def regenerate(self):
+        return False
+
+    def is_empty(self):
+        """Determines if the fleet is empty"""
+        return not self.aliens
+
+    def render(self):
+        """Draws the fleet on the screen"""
+        self.aliens.draw(self.screen)
+
+    def reset(self):
         """Recreates the alien fleet"""
         self._create_fleet()
 
@@ -48,7 +62,7 @@ class AlienFleet:
 
         # Create an alien and keep adding aliens until there's no room left,
         #  with a spacing between of one alien
-        alien = Alien(self)
+        alien = Alien(self.settings, self.screen)
         alien_width, alien_height = alien.rect.size
 
         current_x, current_y = alien_width, alien_height
@@ -65,7 +79,7 @@ class AlienFleet:
         """Creates an alien and place it in the row"""
 
         # Create the alien and set its location based on the current X specified
-        new_alien = Alien(self)
+        new_alien = Alien(self.settings, self.screen)
         new_alien.x = current_x
         new_alien.rect.x = current_x
         new_alien.rect.y = current_y
