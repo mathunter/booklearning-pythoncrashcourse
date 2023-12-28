@@ -2,7 +2,8 @@ import pygame
 
 from alien import Alien
 
-class AlienFleet():
+
+class AlienFleet:
 
     def __init__(self, ai_game):
 
@@ -16,6 +17,10 @@ class AlienFleet():
     def draw(self, screen):
         """Draws the fleet on the screen"""
         self.aliens.draw(screen)
+
+    def regenerate(self):
+        """Recreates the alien fleet"""
+        self._create_fleet()
 
     def update(self):
         """Updates the position of all aliens in the fleet"""
@@ -35,9 +40,11 @@ class AlienFleet():
                 self._change_fleet_direction()
                 break
 
-
     def _create_fleet(self):
         """Creates the fleet of aliens"""
+
+        # Ensure that the fleet is empty to start
+        self.aliens.empty()
 
         # Create an alien and keep adding aliens until there's no room left,
         #  with a spacing between of one alien

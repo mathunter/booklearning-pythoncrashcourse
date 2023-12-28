@@ -60,22 +60,13 @@ class AlienInvasion:
             # Run the game clock
             self.clock.tick(60)
 
-
     def _check_events(self):
-        """Respond to keypresses and mouse events"""
-
-        # Watch for keyboard and mouse events
+        """Respond to keyboard and mouse events"""
         for event in pygame.event.get():
-
-            # Handle input events
             if event.type == pygame.QUIT:
-
-                # Exit the application
                 sys.exit()
-
             elif event.type == pygame.KEYDOWN:
                 self._check_keydown_events(event)
-
             elif event.type == pygame.KEYUP:
                 self._check_keyup_events(event)
 
@@ -127,6 +118,14 @@ class AlienInvasion:
 
         # Update the bullet positions
         self.bullets.update()
+
+        # Check for any bullets that have hit aliens
+        pygame.sprite.groupcollide(self.bullets, self.alien_fleet.aliens, True, True)
+
+        # If, after resolving collisions, there are no more aliens, create a new fleet
+        if not self.alien_fleet.aliens:
+            self.bullets.empty()
+            self.alien_fleet.regenerate()
 
         # Remove bullets that have gone off the top of the screen
         for bullet in self.bullets.sprites():
