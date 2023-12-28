@@ -45,13 +45,24 @@ class AlienInvasion:
             self.ship.update()
 
             # Update the bullets
-            self.bullets.update()
+            self._update_bullets()
 
             # Update the screen
             self._update_screen()
 
             # Run the game clock
             self.clock.tick(60)
+
+    def _update_bullets(self):
+        """Update the position of bullets and get rid of old bullets"""
+        
+        # Update the bullet positions
+        self.bullets.update()
+
+        # Remove bullets that have gone off the top of the screen
+        for bullet in self.bullets.sprites():
+            if bullet.rect.bottom <= 0:
+                self.bullets.remove(bullet)
 
     def _check_events(self):
         """Respond to keypresses and mouse events"""
@@ -96,8 +107,9 @@ class AlienInvasion:
     def _fire_bullet(self):
         """Creates a new bullet and adds it to the group"""
 
-        new_bullet = Bullet(self)
-        self.bullets.add(new_bullet)
+        if len(self.bullets) < self.settings.bullets_allowed:
+            new_bullet = Bullet(self)
+            self.bullets.add(new_bullet)
 
     def _update_screen(self):
         """Update images on the screen and flip to the new screen"""
