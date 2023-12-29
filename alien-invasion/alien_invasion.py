@@ -3,6 +3,7 @@ import sys
 import pygame
 
 from alien_fleet import AlienFleet
+from background import Background
 from bullet_volley import BulletVolley
 from collision_manager import CollisionManager
 from game_stats import GameStats
@@ -36,6 +37,9 @@ class AlienInvasion:
 
         # Create the game stats
         self.stats = GameStats(self.settings)
+
+        # Create the background layer
+        self.background = Background(self.screen)
 
         # Create the ship
         self.ship = Ship(self.settings, self.screen)
@@ -112,6 +116,9 @@ class AlienInvasion:
 
         # Redraw the screen during each pass through the loop
         self.screen.fill(self.settings.bg_color)
+
+        # Draw the background
+        self.background.render()
 
         # Add the ship
         self.ship.render()

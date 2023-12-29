@@ -10,3 +10,5 @@ Original code from "Python Crash Course, 3rd
 Edition" by Eric Matthes.
 
 Space and alien ships from https://opengameart.org/content/space-ship-construction-kit.
+
+Starfield background from https://opengameart.org/content/starfield-background.
