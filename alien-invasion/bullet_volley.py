@@ -2,14 +2,16 @@ import pygame
 from pygame import Surface
 
 from bullet import Bullet
+from game_state import GameState
 from settings import Settings
 from ship import Ship
 
 
 class BulletVolley:
 
-    def __init__(self, settings: Settings, screen: Surface, ship: Ship):
+    def __init__(self, game_state: GameState, settings: Settings, screen: Surface, ship: Ship):
 
+        self.__game_state = game_state
         self.__settings = settings
         self.__screen = screen
         self.__ship = ship
@@ -20,7 +22,7 @@ class BulletVolley:
     def add_bullet(self):
         """Creates a new bullet and adds it to the group"""
         if len(self.bullets) < self.__settings.bullets_allowed:
-            new_bullet = Bullet(self.__settings, self.__screen, self.__ship.rect.midtop)
+            new_bullet = Bullet(self.__game_state, self.__settings, self.__screen, self.__ship.rect.midtop)
             self.bullets.add(new_bullet)
 
     def render(self):

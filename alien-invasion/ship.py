@@ -1,15 +1,15 @@
 import pygame
 from pygame import Surface
 
-from settings import Settings
+from game_state import GameState
 
 
 class Ship:
     """A class to manage the ship"""
 
-    def __init__(self, settings: Settings, screen: Surface):
+    def __init__(self, game_state: GameState, screen: Surface):
 
-        self.__settings = settings
+        self.__game_state = game_state
         self.__screen = screen
 
         # Movement directions
@@ -53,9 +53,9 @@ class Ship:
 
         # Move left or right depending on the flags
         if self.__moving_right and self.rect.right < self.__screen_rect.right:
-            self.x += self.__settings.ship_speed
+            self.x += self.__game_state.ship_speed
         elif self.__moving_left and self.rect.left > 0:
-            self.x -= self.__settings.ship_speed
+            self.x -= self.__game_state.ship_speed
 
         # Update the rect from the ship location
         self.rect.x = self.x

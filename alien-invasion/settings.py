@@ -12,7 +12,7 @@ class Settings:
         self.ship_limit = 3
 
         # Bullet settings
-        self.bullets_allowed = 5
+        self.bullets_allowed = 10
         self.bullet_speed = 3
         self.bullet_width = 3
         self.bullet_height = 20
@@ -22,3 +22,6 @@ class Settings:
         self.alien_speed = 1.0
         self.fleet_drop_speed = 10
         self.fleet_direction = 1
+
+        # Difficulty speed up
+        self.speedup_scale = 1.2

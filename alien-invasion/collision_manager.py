@@ -38,6 +38,7 @@ class CollisionManager:
         if self.__alien_fleet.is_empty():
             self.__bullet_volley.reset()
             self.__alien_fleet.reset()
+            self.__game_state.increase_speed()
 
     def _check_ship_alien_collisions(self):
         """Checks for any collisions between the ship and aliens"""

@@ -4,15 +4,17 @@ import pygame
 from pygame import Surface
 from pygame.sprite import Sprite
 
+from game_state import GameState
 from settings import Settings
 
 
 class Bullet(Sprite):
     """A class to manage bullets fired from the ship"""
 
-    def __init__(self, settings: Settings, screen: Surface, starting_location: Tuple[int, int]):
+    def __init__(self, game_state: GameState, settings: Settings, screen: Surface, starting_location: Tuple[int, int]):
         super().__init__()
 
+        self.__game_state = game_state
         self.__screen = screen
         self.__settings = settings
         self.__color = self.__settings.bullet_color
@@ -28,7 +30,7 @@ class Bullet(Sprite):
         """Move the bullet up the screen"""
 
         # Update the stored position of the bullet
-        self.y -= self.__settings.bullet_speed
+        self.y -= self.__game_state.bullet_speed
 
         # Update the display position
         self.rect.y = self.y

@@ -2,14 +2,16 @@ import pygame
 from pygame import Surface
 
 from alien import Alien
+from game_state import GameState
 from settings import Settings
 
 
 class AlienFleet:
     """A class tha represents a fleet of aliens that descend on the player"""
 
-    def __init__(self, settings: Settings, screen: Surface):
+    def __init__(self, game_state: GameState, settings: Settings, screen: Surface):
 
+        self.__game_state = game_state
         self.__settings = settings
         self.__screen = screen
 
@@ -46,7 +48,7 @@ class AlienFleet:
         """Drops the entire fleet, and changes their direction"""
         for alien in self.aliens.sprites():
             alien.rect.y += self.__settings.fleet_drop_speed
-        self.__settings.fleet_direction *= -1
+        self.__game_state.fleet_direction *= -1
 
     def _check_fleet_edges(self):
         """Checks whether any alien in the fleet has hit the edge of the screen"""
@@ -63,7 +65,7 @@ class AlienFleet:
 
         # Create an alien and keep adding aliens until there's no room left,
         #  with a spacing between of one alien
-        alien = Alien(self.__settings, self.__screen)
+        alien = Alien(self.__game_state, self.__screen)
         alien_width, alien_height = alien.rect.size
 
         current_x, current_y = alien_width, alien_height
@@ -80,7 +82,7 @@ class AlienFleet:
         """Creates an alien and place it in the row"""
 
         # Create the alien and set its location based on the current X specified
-        new_alien = Alien(self.__settings, self.__screen)
+        new_alien = Alien(self.__game_state, self.__screen)
         new_alien.x = current_x
         new_alien.rect.x = current_x
         new_alien.rect.y = current_y

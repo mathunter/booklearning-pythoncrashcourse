@@ -40,13 +40,13 @@ class AlienInvasion:
         self.background = Background(self.screen)
 
         # Create the ship
-        self.ship = Ship(self.settings, self.screen)
+        self.ship = Ship(self.game_state, self.screen)
 
         # Create the alien fleet
-        self.alien_fleet = AlienFleet(self.settings, self.screen)
+        self.alien_fleet = AlienFleet(self.game_state, self.settings, self.screen)
 
         # Create the bullet volley
-        self.bullet_volley = BulletVolley(self.settings, self.screen, self.ship)
+        self.bullet_volley = BulletVolley(self.game_state, self.settings, self.screen, self.ship)
 
         # Create a new manager to resolve collisions between entities
         self.collision_manager = CollisionManager(self.ship, self.bullet_volley, self.alien_fleet, self.game_state)

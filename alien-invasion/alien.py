@@ -2,17 +2,17 @@ import pygame
 from pygame import Surface
 from pygame.sprite import Sprite
 
-from settings import Settings
+from game_state import GameState
 
 
 class Alien(Sprite):
     """A class that represents a single alien in the fleet"""
 
-    def __init__(self, settings: Settings, screen: Surface):
+    def __init__(self, game_state: GameState, screen: Surface):
         super().__init__()
 
         self.__screen = screen
-        self.__settings = settings
+        self.__game_state = game_state
 
         # Load the alien image and get the rect
         self.image = pygame.image.load("images/alien.png").convert_alpha()
@@ -33,5 +33,5 @@ class Alien(Sprite):
 
     def update(self):
         """Move the alien"""
-        self.x += self.__settings.alien_speed * self.__settings.fleet_direction
+        self.x += self.__game_state.alien_speed * self.__game_state.fleet_direction
         self.rect.x = self.x
