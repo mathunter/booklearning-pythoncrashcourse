@@ -8,6 +8,7 @@ from bullet_volley import BulletVolley
 from button import Button
 from collision_manager import CollisionManager
 from game_state import GameState
+from scoreboard import Scoreboard
 from settings import Settings
 from ship import Ship
 
@@ -36,6 +37,9 @@ class AlienInvasion:
         # Create the game stats
         self.game_state = GameState(self.settings)
 
+        # Create the scoreboard
+        self.scoreboard = Scoreboard(self.game_state, self.settings, self.screen)
+
         # Create the background layer
         self.background = Background(self.screen)
 
@@ -49,7 +53,8 @@ class AlienInvasion:
         self.bullet_volley = BulletVolley(self.game_state, self.settings, self.screen, self.ship)
 
         # Create a new manager to resolve collisions between entities
-        self.collision_manager = CollisionManager(self.ship, self.bullet_volley, self.alien_fleet, self.game_state)
+        self.collision_manager = CollisionManager(self.ship, self.bullet_volley, self.alien_fleet, self.game_state,
+                                                  self.scoreboard)
 
         # Create a play button
         self.play_button = Button(self.screen, "Play")
@@ -110,28 +115,32 @@ class AlienInvasion:
 
     def _check_keyup_events(self, event):
         """Responds to key releases"""
-        if event.key == pygame.K_LEFT:
-            self.ship.stop_movement()
-        elif event.key == pygame.K_RIGHT:
+        if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
             self.ship.stop_movement()
 
     def _check_play_button_pressed(self, mouse_pos):
-        """Checks to see if the play button was pressed"""
+        """Checks to see if the play button was pressed, and starts the game"""
         button_clicked = self.play_button.rect.collidepoint(mouse_pos)
         if not self.game_state.is_game_active and button_clicked:
-            # Hide the mouse cursor
-            pygame.mouse.set_visible(False)
+            self._start_game()
 
-            # Reset the game state
-            self.game_state.reset_state()
+    def _start_game(self):
+        """Starts a new game"""
 
-            # Reset all game items
-            self.ship.reset()
-            self.bullet_volley.reset()
-            self.alien_fleet.reset()
+        # Hide the mouse cursor
+        pygame.mouse.set_visible(False)
 
-            # Activate the game
-            self.game_state.is_game_active = True
+        # Reset the game state
+        self.game_state.reset_state()
+        self.scoreboard.prep_score()
+
+        # Reset all game items
+        self.ship.reset()
+        self.bullet_volley.reset()
+        self.alien_fleet.reset()
+
+        # Activate the game
+        self.game_state.is_game_active = True
 
     def _update_screen(self):
         """Update images on the screen and flip to the new screen"""
@@ -141,6 +150,9 @@ class AlienInvasion:
 
         # Draw the background
         self.background.render()
+
+        # Draw the scoreboard
+        self.scoreboard.render()
 
         # Add the ship
         self.ship.render()

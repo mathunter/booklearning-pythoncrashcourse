@@ -21,7 +21,7 @@ class BulletVolley:
 
     def add_bullet(self):
         """Creates a new bullet and adds it to the group"""
-        if len(self.bullets) < self.__settings.bullets_allowed:
+        if self.__game_state.is_game_active and len(self.bullets) < self.__settings.bullets_allowed:
             new_bullet = Bullet(self.__game_state, self.__settings, self.__screen, self.__ship.rect.midtop)
             self.bullets.add(new_bullet)
 

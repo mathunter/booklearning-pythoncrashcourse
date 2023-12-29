@@ -13,15 +13,19 @@ class GameState:
         self.bullet_speed = None
         self.alien_speed = None
         self.fleet_direction = None
+        self.score = None
+        self.alien_points = None
 
         self.reset_state()
 
     def increase_speed(self):
         """Increases the speed of the game by the configured scale"""
         speedup_scale = self.settings.speedup_scale
+        score_scale = self.settings.score_scale
         self.ship_speed *= speedup_scale
         self.bullet_speed *= speedup_scale
         self.alien_speed *= speedup_scale
+        self.alien_points = int(self.alien_points * score_scale)
 
     def reset_state(self):
         """Resets the state for the game"""
@@ -31,3 +35,5 @@ class GameState:
         self.bullet_speed = self.settings.bullet_speed
         self.alien_speed = self.settings.alien_speed
         self.fleet_direction = self.settings.fleet_direction
+        self.score = 0
+        self.alien_points = self.settings.alien_points

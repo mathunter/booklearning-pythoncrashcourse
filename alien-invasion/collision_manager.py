@@ -5,17 +5,20 @@ import pygame
 from alien_fleet import AlienFleet
 from bullet_volley import BulletVolley
 from game_state import GameState
+from scoreboard import Scoreboard
 from ship import Ship
 
 
 class CollisionManager:
 
-    def __init__(self, ship: Ship, bullet_volley: BulletVolley, alien_fleet: AlienFleet, game_state: GameState):
+    def __init__(self, ship: Ship, bullet_volley: BulletVolley, alien_fleet: AlienFleet, game_state: GameState,
+                 scoreboard: Scoreboard):
 
         self.__ship = ship
         self.__bullet_volley = bullet_volley
         self.__alien_fleet = alien_fleet
         self.__game_state = game_state
+        self.__scoreboard = scoreboard
 
     def resolve_collisions(self):
         """Checks for and resolves collisions between entities"""
@@ -32,7 +35,13 @@ class CollisionManager:
         """Checks for any collisions between bullets and aliens"""
 
         # Check and resolve the collisions
-        pygame.sprite.groupcollide(self.__bullet_volley.bullets, self.__alien_fleet.aliens, True, True)
+        collisions = pygame.sprite.groupcollide(self.__bullet_volley.bullets, self.__alien_fleet.aliens, True, True)
+
+        # If an alien was hit, increment the score by the number of aliens hit
+        if collisions:
+            for aliens in collisions.values():
+                self.__game_state.score += self.__game_state.alien_points * len(aliens)
+            self.__scoreboard.prep_score()
 
         # If, after resolving collisions, there are no more aliens, create a new fleet
         if self.__alien_fleet.is_empty():
