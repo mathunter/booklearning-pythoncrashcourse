@@ -5,9 +5,9 @@ import pygame
 from entities.alien_fleet import AlienFleet
 from entities.background import Background
 from entities.bullet_volley import BulletVolley
-from entities.button import Button
 from entities.collision_manager import CollisionManager
 from entities.game_state import GameState
+from entities.play_button import PlayButton
 from entities.scoreboard import Scoreboard
 from entities.ship import Ship
 from settings import Settings
@@ -58,7 +58,7 @@ class AlienInvasion:
                                                   self.scoreboard)
 
         # Create a play button
-        self.play_button = Button(self.screen_rect.center, "Play")
+        self.play_button = PlayButton(self.screen_rect.center, "Play")
 
     def game_over(self):
         """Handles a game over condition"""
@@ -158,11 +158,11 @@ class AlienInvasion:
         # Draw the scoreboard
         self.scoreboard.render(self.screen)
 
-        # Add the ship
-        self.ship.render(self.screen)
-
         # Add the bullets
         self.bullet_volley.render(self.screen)
+
+        # Add the ship
+        self.ship.render(self.screen)
 
         # Add the aliens
         self.alien_fleet.render(self.screen)

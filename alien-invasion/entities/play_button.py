@@ -1,15 +1,13 @@
 from typing import Tuple
 
 import pygame.font
-
 from pygame import Surface
 
 
-class Button:
+class PlayButton:
     """A class to build buttons for the game"""
 
     def __init__(self, center: Tuple[int, int], message: str):
-
         # Set the dimensions and properties
         self._width, self.height = 200, 50
         self._button_color = (0, 135, 0)

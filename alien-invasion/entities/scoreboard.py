@@ -101,4 +101,3 @@ class Scoreboard:
     def _render_score_image(self, score_str):
         """Renders the specified score string to an image"""
         return self._font.render(score_str, True, self.FONT_COLOR, self._settings.bg_color)
-

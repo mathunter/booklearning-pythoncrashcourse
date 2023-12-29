@@ -7,6 +7,8 @@ from entities.game_state import GameState
 class Ship:
     """A class to manage the ship"""
 
+    MARGIN_BOTTOM = 10
+
     def __init__(self, game_state: GameState, bounds: Rect):
 
         self._game_state = game_state
@@ -51,7 +53,7 @@ class Ship:
         # Move left or right depending on the flags
         if self._moving_right and self.rect.right < self._bounds.right:
             self.x += self._game_state.ship_speed
-        elif self._moving_left and self.rect.left > 0:
+        elif self._moving_left and self.rect.left > self._bounds.left:
             self.x -= self._game_state.ship_speed
 
         # Update the rect from the ship location
@@ -59,5 +61,5 @@ class Ship:
 
     def _center_ship(self):
         """Re-centers the ship in the middle of the screen"""
-        self.rect.midbottom = (self._bounds.centerx, self._bounds.bottom - 10)
+        self.rect.midbottom = (self._bounds.centerx, self._bounds.bottom - self.MARGIN_BOTTOM)
         self.x = float(self.rect.x)

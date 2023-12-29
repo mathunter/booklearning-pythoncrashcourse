@@ -33,7 +33,7 @@ class Alien(Sprite):
 
     def has_hit_edge(self):
         """Checks whether the alien has hit the edge of the screen"""
-        return (self.rect.right >= self._bounds.right) or (self.rect.left <= 0)
+        return (self.rect.right >= self._bounds.right) or (self.rect.left <= self._bounds.left)
 
     def has_landed(self):
         """Determines if this alien has hit the bottom of the screen"""
