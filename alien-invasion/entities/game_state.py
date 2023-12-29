@@ -16,8 +16,13 @@ class GameState:
         self.game_score = None
         self.high_score = 0
         self.alien_points = None
+        self.level = None
 
-        self.reset_state()
+        self.reset()
+
+    def change_fleet_direction(self):
+        """Changes the fleet direction"""
+        self.fleet_direction *= -1
 
     def increase_speed(self):
         """Increases the speed of the game by the configured scale"""
@@ -28,7 +33,7 @@ class GameState:
         self.alien_speed *= speedup_scale
         self.alien_points = int(self.alien_points * score_scale)
 
-    def reset_state(self):
+    def reset(self):
         """Resets the state for the game"""
         self.ships_left = self.settings.ship_limit
         self.is_game_active = False
@@ -38,3 +43,4 @@ class GameState:
         self.fleet_direction = self.settings.fleet_direction
         self.game_score = 0
         self.alien_points = self.settings.alien_points
+        self.level = 1

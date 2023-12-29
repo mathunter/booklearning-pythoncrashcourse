@@ -133,9 +133,9 @@ class AlienInvasion:
         # Hide the mouse cursor
         pygame.mouse.set_visible(False)
 
-        # Reset the game state
-        self.game_state.reset_state()
-        self.scoreboard.prep_game_score()
+        # Reset the game state and scoreboard
+        self.game_state.reset()
+        self.scoreboard.reset()
 
         # Reset all game items
         self.ship.reset()

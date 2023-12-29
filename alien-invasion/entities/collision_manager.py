@@ -49,6 +49,8 @@ class CollisionManager:
             self.__bullet_volley.reset()
             self.__alien_fleet.reset()
             self.__game_state.increase_speed()
+            self.__game_state.level += 1
+            self.__scoreboard.prep_level()
 
     def _check_ship_alien_collisions(self):
         """Checks for any collisions between the ship and aliens"""
@@ -62,6 +64,7 @@ class CollisionManager:
 
         # Decrement the number of ships left
         self.__game_state.ships_left -= 1
+        self.__scoreboard.prep_lives()
 
         # If there are ships remaining, reset the game
         if self.__game_state.ships_left > 0:

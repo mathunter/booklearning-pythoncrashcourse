@@ -14,6 +14,7 @@ class AlienFleet:
         self.__game_state = game_state
         self.__settings = settings
         self.__screen = screen
+        self.__screen_width, self.__screen_height = screen.get_rect().size
 
         # Create a group for the aliens and set up the fleet
         self.aliens = pygame.sprite.Group()
@@ -21,11 +22,7 @@ class AlienFleet:
 
     def has_landed(self):
         """Checks to see if any alien in the fleet has reached the bottom of the scree"""
-        for alien in self.aliens.sprites():
-            if alien.rect.bottom >= self.__settings.screen_height:
-                return True
-
-        return False
+        return any(alien.has_landed() for alien in self.aliens.sprites())
 
     def is_empty(self):
         """Determines if the fleet is empty"""
@@ -47,15 +44,13 @@ class AlienFleet:
     def _change_fleet_direction(self):
         """Drops the entire fleet, and changes their direction"""
         for alien in self.aliens.sprites():
-            alien.rect.y += self.__settings.fleet_drop_speed
-        self.__game_state.fleet_direction *= -1
+            alien.descend()
+        self.__game_state.change_fleet_direction()
 
     def _check_fleet_edges(self):
         """Checks whether any alien in the fleet has hit the edge of the screen"""
-        for alien in self.aliens.sprites():
-            if alien.check_edges():
-                self._change_fleet_direction()
-                break
+        if any(alien.has_hit_edge() for alien in self.aliens.sprites()):
+            self._change_fleet_direction()
 
     def _create_fleet(self):
         """Creates the fleet of aliens"""
@@ -63,14 +58,14 @@ class AlienFleet:
         # Ensure that the fleet is empty to start
         self.aliens.empty()
 
-        # Create an alien and keep adding aliens until there's no room left,
+        # Create an alien to get the size of the alien image, then create the fleet
         #  with a spacing between of one alien
-        alien = Alien(self.__game_state, self.__screen)
+        alien = Alien(self.__game_state, self.__settings, self.__screen)
         alien_width, alien_height = alien.rect.size
 
         current_x, current_y = alien_width, alien_height
-        while current_y < (self.__settings.screen_height - 4 * alien_height):
-            while current_x < (self.__settings.screen_width - 2 * alien_width):
+        while current_y < (self.__screen_height - 4 * alien_height):
+            while current_x < (self.__screen_width - 2 * alien_width):
                 self._create_fleet_alien(current_x, current_y)
                 current_x += alien_width
 
@@ -82,8 +77,7 @@ class AlienFleet:
         """Creates an alien and place it in the row"""
 
         # Create the alien and set its location based on the current X specified
-        new_alien = Alien(self.__game_state, self.__screen)
+        new_alien = Alien(self.__game_state, self.__settings, self.__screen)
         new_alien.x = current_x
-        new_alien.rect.x = current_x
-        new_alien.rect.y = current_y
+        new_alien.rect.topleft = (current_x, current_y)
         self.aliens.add(new_alien)
