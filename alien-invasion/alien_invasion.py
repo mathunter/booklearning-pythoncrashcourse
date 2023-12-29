@@ -61,7 +61,6 @@ class AlienInvasion:
 
             # If the game is active, handle all the updates
             if self.stats.ships_left > 0:
-
                 # Update the ship
                 self.ship.update()
 

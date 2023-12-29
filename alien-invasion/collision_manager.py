@@ -55,7 +55,6 @@ class CollisionManager:
 
         # If there are any ships remaining, reset the game
         if self.stats.ships_left >= 0:
-
             # Reset the bullet volley
             self.volley.reset()
 

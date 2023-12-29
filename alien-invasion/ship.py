@@ -18,7 +18,8 @@ class Ship:
         self.screen_rect = screen.get_rect()
 
         # Load the ship image and get its rect
-        self.image = pygame.image.load('images/ship.bmp')
+        self.image = pygame.image.load('images/ship.png').convert_alpha()
+        self.image = pygame.transform.scale_by(self.image, .5)
         self.rect = self.image.get_rect()
 
         # Start the ship in the center
