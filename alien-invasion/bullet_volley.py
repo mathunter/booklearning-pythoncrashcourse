@@ -9,19 +9,18 @@ from ship import Ship
 class BulletVolley:
 
     def __init__(self, settings: Settings, screen: Surface, ship: Ship):
-        """Initializes this instance"""
 
-        self.settings = settings
-        self.screen = screen
-        self.ship = ship
+        self.__settings = settings
+        self.__screen = screen
+        self.__ship = ship
 
         # Create a group for the bullets in the volley
         self.bullets = pygame.sprite.Group()
 
     def add_bullet(self):
         """Creates a new bullet and adds it to the group"""
-        if len(self.bullets) < self.settings.bullets_allowed:
-            new_bullet = Bullet(self.settings, self.screen, self.ship.rect.midtop)
+        if len(self.bullets) < self.__settings.bullets_allowed:
+            new_bullet = Bullet(self.__settings, self.__screen, self.__ship.rect.midtop)
             self.bullets.add(new_bullet)
 
     def render(self):

@@ -6,11 +6,12 @@ from settings import Settings
 
 
 class AlienFleet:
+    """A class tha represents a fleet of aliens that descend on the player"""
 
     def __init__(self, settings: Settings, screen: Surface):
 
-        self.settings = settings
-        self.screen = screen
+        self.__settings = settings
+        self.__screen = screen
 
         # Create a group for the aliens and set up the fleet
         self.aliens = pygame.sprite.Group()
@@ -19,7 +20,7 @@ class AlienFleet:
     def has_landed(self):
         """Checks to see if any alien in the fleet has reached the bottom of the scree"""
         for alien in self.aliens.sprites():
-            if alien.rect.bottom >= self.settings.screen_height:
+            if alien.rect.bottom >= self.__settings.screen_height:
                 return True
 
         return False
@@ -30,7 +31,7 @@ class AlienFleet:
 
     def render(self):
         """Draws the fleet on the screen"""
-        self.aliens.draw(self.screen)
+        self.aliens.draw(self.__screen)
 
     def reset(self):
         """Recreates the alien fleet"""
@@ -44,8 +45,8 @@ class AlienFleet:
     def _change_fleet_direction(self):
         """Drops the entire fleet, and changes their direction"""
         for alien in self.aliens.sprites():
-            alien.rect.y += self.settings.fleet_drop_speed
-        self.settings.fleet_direction *= -1
+            alien.rect.y += self.__settings.fleet_drop_speed
+        self.__settings.fleet_direction *= -1
 
     def _check_fleet_edges(self):
         """Checks whether any alien in the fleet has hit the edge of the screen"""
@@ -62,12 +63,12 @@ class AlienFleet:
 
         # Create an alien and keep adding aliens until there's no room left,
         #  with a spacing between of one alien
-        alien = Alien(self.settings, self.screen)
+        alien = Alien(self.__settings, self.__screen)
         alien_width, alien_height = alien.rect.size
 
         current_x, current_y = alien_width, alien_height
-        while current_y < (self.settings.screen_height - 4 * alien_height):
-            while current_x < (self.settings.screen_width - 2 * alien_width):
+        while current_y < (self.__settings.screen_height - 4 * alien_height):
+            while current_x < (self.__settings.screen_width - 2 * alien_width):
                 self._create_fleet_alien(current_x, current_y)
                 current_x += alien_width
 
@@ -79,7 +80,7 @@ class AlienFleet:
         """Creates an alien and place it in the row"""
 
         # Create the alien and set its location based on the current X specified
-        new_alien = Alien(self.settings, self.screen)
+        new_alien = Alien(self.__settings, self.__screen)
         new_alien.x = current_x
         new_alien.rect.x = current_x
         new_alien.rect.y = current_y

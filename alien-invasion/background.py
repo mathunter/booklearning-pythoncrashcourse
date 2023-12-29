@@ -1,22 +1,17 @@
 import pygame
-from pygame import Surface
 
-from settings import Settings
+from pygame import Surface
 
 
 class Background:
 
     def __init__(self, screen: Surface):
-        """Initializes this instance"""
-
-        self.screen = screen
+        self.__screen = screen
 
         # Load the background image
-        self.image = pygame.image.load("images/bg.png")
-        self.rect = self.image.get_rect()
+        self.__image = pygame.image.load("images/bg.png")
+        self.__rect = self.__image.get_rect()
 
     def render(self):
         """Draw the background"""
-        self.screen.blit(self.image, self.rect)
-
-
+        self.__screen.blit(self.__image, self.__rect)

@@ -9,12 +9,10 @@ class Alien(Sprite):
     """A class that represents a single alien in the fleet"""
 
     def __init__(self, settings: Settings, screen: Surface):
-        """Initialize the alien and set the starting position"""
-
         super().__init__()
 
-        self.screen = screen
-        self.settings = settings
+        self.__screen = screen
+        self.__settings = settings
 
         # Load the alien image and get the rect
         self.image = pygame.image.load("images/alien.png").convert_alpha()
@@ -30,10 +28,10 @@ class Alien(Sprite):
 
     def check_edges(self):
         """Checks whether the alien is at the edge of the screen"""
-        screen_rect = self.screen.get_rect()
+        screen_rect = self.__screen.get_rect()
         return (self.rect.right >= screen_rect.right) or (self.rect.left <= 0)
 
     def update(self):
         """Move the alien"""
-        self.x += self.settings.alien_speed * self.settings.fleet_direction
+        self.x += self.__settings.alien_speed * self.__settings.fleet_direction
         self.rect.x = self.x

@@ -5,8 +5,9 @@ import pygame
 from alien_fleet import AlienFleet
 from background import Background
 from bullet_volley import BulletVolley
+from button import Button
 from collision_manager import CollisionManager
-from game_stats import GameStats
+from game_state import GameState
 from settings import Settings
 from ship import Ship
 
@@ -15,9 +16,6 @@ class AlienInvasion:
     """Overall class to manage game assets and behavior."""
 
     def __init__(self):
-        """Initialize the game and create game resources"""
-
-        self.game_active = True
 
         # Initialize the game framework
         pygame.init()
@@ -36,7 +34,7 @@ class AlienInvasion:
         pygame.display.set_caption("Alien Invasion")
 
         # Create the game stats
-        self.stats = GameStats(self.settings)
+        self.game_state = GameState(self.settings)
 
         # Create the background layer
         self.background = Background(self.screen)
@@ -51,11 +49,14 @@ class AlienInvasion:
         self.bullet_volley = BulletVolley(self.settings, self.screen, self.ship)
 
         # Create a new manager to resolve collisions between entities
-        self.collision_manager = CollisionManager(self.ship, self.bullet_volley, self.alien_fleet, self.stats)
+        self.collision_manager = CollisionManager(self.ship, self.bullet_volley, self.alien_fleet, self.game_state)
+
+        # Create a play button
+        self.play_button = Button(self.screen, "Play")
 
     def game_over(self):
         """Handles a game over condition"""
-        self.game_active = False
+        self.settings, self.screen.is_game_active = False
 
     def run_game(self):
         """Start the main loop for the game"""
@@ -64,7 +65,7 @@ class AlienInvasion:
             self._check_events()
 
             # If the game is active, handle all the updates
-            if self.stats.ships_left > 0:
+            if self.game_state.is_game_active:
                 # Update the ship
                 self.ship.update()
 
@@ -88,6 +89,9 @@ class AlienInvasion:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = pygame.mouse.get_pos()
+                self._check_play_button_pressed(mouse_pos)
             elif event.type == pygame.KEYDOWN:
                 self._check_keydown_events(event)
             elif event.type == pygame.KEYUP:
@@ -111,6 +115,24 @@ class AlienInvasion:
         elif event.key == pygame.K_RIGHT:
             self.ship.stop_movement()
 
+    def _check_play_button_pressed(self, mouse_pos):
+        """Checks to see if the play button was pressed"""
+        button_clicked = self.play_button.rect.collidepoint(mouse_pos)
+        if not self.game_state.is_game_active and button_clicked:
+            # Hide the mouse cursor
+            pygame.mouse.set_visible(False)
+
+            # Reset the game state
+            self.game_state.reset_state()
+
+            # Reset all game items
+            self.ship.reset()
+            self.bullet_volley.reset()
+            self.alien_fleet.reset()
+
+            # Activate the game
+            self.game_state.is_game_active = True
+
     def _update_screen(self):
         """Update images on the screen and flip to the new screen"""
 
@@ -128,6 +150,10 @@ class AlienInvasion:
 
         # Add the aliens
         self.alien_fleet.render()
+
+        # If the game is not active, draw the play button
+        if not self.game_state.is_game_active:
+            self.play_button.render()
 
         # Make the most recently-drawn screen visible
         pygame.display.flip()
