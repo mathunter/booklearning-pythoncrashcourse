@@ -1,10 +1,10 @@
 import pygame
 from pygame import Surface
 
-from bullet import Bullet
-from game_state import GameState
+from entities.bullet import Bullet
+from entities.game_state import GameState
 from settings import Settings
-from ship import Ship
+from entities.ship import Ship
 
 
 class BulletVolley:

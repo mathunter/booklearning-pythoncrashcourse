@@ -2,7 +2,7 @@ import pygame
 from pygame import Surface
 from pygame.sprite import Sprite
 
-from game_state import GameState
+from entities.game_state import GameState
 
 
 class Alien(Sprite):
@@ -15,7 +15,7 @@ class Alien(Sprite):
         self.__game_state = game_state
 
         # Load the alien image and get the rect
-        self.image = pygame.image.load("images/alien.png").convert_alpha()
+        self.image = pygame.image.load("assets/images/alien.png").convert_alpha()
         self.image = pygame.transform.scale_by(self.image, .5)
         self.rect = self.image.get_rect()
 

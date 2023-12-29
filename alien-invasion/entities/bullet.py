@@ -4,7 +4,7 @@ import pygame
 from pygame import Surface
 from pygame.sprite import Sprite
 
-from game_state import GameState
+from entities.game_state import GameState
 from settings import Settings
 
 

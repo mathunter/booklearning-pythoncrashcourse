@@ -1,7 +1,7 @@
 import pygame
 from pygame import Surface
 
-from game_state import GameState
+from entities.game_state import GameState
 
 
 class Ship:
@@ -20,7 +20,7 @@ class Ship:
         self.__screen_rect = self.__screen.get_rect()
 
         # Load the ship image and get its rect
-        self.image = pygame.image.load('images/ship.png').convert_alpha()
+        self.image = pygame.image.load('assets/images/ship.png').convert_alpha()
         self.image = pygame.transform.scale_by(self.image, .5)
         self.rect = self.image.get_rect()
 

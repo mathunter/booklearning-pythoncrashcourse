@@ -14,7 +14,7 @@ class Button:
         self.__width, self.height = 200, 50
         self.__button_color = (0, 135, 0)
         self.__text_color = (255, 255, 255)
-        self.__font = pygame.font.SysFont(None, 48)
+        self.__font = pygame.font.Font("assets/fonts/retro_space_inv.ttf", 48)
 
         # Build the button's rect object and center it
         self.rect = pygame.Rect(0, 0, self.__width, self.height)

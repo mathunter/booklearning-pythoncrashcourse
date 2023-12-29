@@ -2,11 +2,11 @@ from time import sleep
 
 import pygame
 
-from alien_fleet import AlienFleet
-from bullet_volley import BulletVolley
-from game_state import GameState
-from scoreboard import Scoreboard
-from ship import Ship
+from entities.alien_fleet import AlienFleet
+from entities.bullet_volley import BulletVolley
+from entities.game_state import GameState
+from entities.scoreboard import Scoreboard
+from entities.ship import Ship
 
 
 class CollisionManager:
@@ -40,8 +40,9 @@ class CollisionManager:
         # If an alien was hit, increment the score by the number of aliens hit
         if collisions:
             for aliens in collisions.values():
-                self.__game_state.score += self.__game_state.alien_points * len(aliens)
-            self.__scoreboard.prep_score()
+                self.__game_state.game_score += self.__game_state.alien_points * len(aliens)
+            self.__scoreboard.prep_game_score()
+            self.__scoreboard.check_high_score()
 
         # If, after resolving collisions, there are no more aliens, create a new fleet
         if self.__alien_fleet.is_empty():

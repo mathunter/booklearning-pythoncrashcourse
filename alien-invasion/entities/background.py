@@ -9,7 +9,7 @@ class Background:
         self.__screen = screen
 
         # Load the background image
-        self.__image = pygame.image.load("images/bg.png")
+        self.__image = pygame.image.load("assets/images/bg.png")
         self.__rect = self.__image.get_rect()
 
     def render(self):

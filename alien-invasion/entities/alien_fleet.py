@@ -1,8 +1,8 @@
 import pygame
 from pygame import Surface
 
-from alien import Alien
-from game_state import GameState
+from entities.alien import Alien
+from entities.game_state import GameState
 from settings import Settings
 
 

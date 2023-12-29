@@ -2,15 +2,15 @@ import sys
 
 import pygame
 
-from alien_fleet import AlienFleet
-from background import Background
-from bullet_volley import BulletVolley
-from button import Button
-from collision_manager import CollisionManager
-from game_state import GameState
-from scoreboard import Scoreboard
+from entities.alien_fleet import AlienFleet
+from entities.background import Background
+from entities.bullet_volley import BulletVolley
+from entities.button import Button
+from entities.collision_manager import CollisionManager
+from entities.game_state import GameState
+from entities.scoreboard import Scoreboard
+from entities.ship import Ship
 from settings import Settings
-from ship import Ship
 
 
 class AlienInvasion:
@@ -61,7 +61,8 @@ class AlienInvasion:
 
     def game_over(self):
         """Handles a game over condition"""
-        self.settings, self.screen.is_game_active = False
+        self.settings = False
+        self.screen.is_game_active = False
 
     def run_game(self):
         """Start the main loop for the game"""
@@ -132,7 +133,7 @@ class AlienInvasion:
 
         # Reset the game state
         self.game_state.reset_state()
-        self.scoreboard.prep_score()
+        self.scoreboard.prep_game_score()
 
         # Reset all game items
         self.ship.reset()

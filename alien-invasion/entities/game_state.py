@@ -13,7 +13,8 @@ class GameState:
         self.bullet_speed = None
         self.alien_speed = None
         self.fleet_direction = None
-        self.score = None
+        self.game_score = None
+        self.high_score = 0
         self.alien_points = None
 
         self.reset_state()
@@ -35,5 +36,5 @@ class GameState:
         self.bullet_speed = self.settings.bullet_speed
         self.alien_speed = self.settings.alien_speed
         self.fleet_direction = self.settings.fleet_direction
-        self.score = 0
+        self.game_score = 0
         self.alien_points = self.settings.alien_points
