@@ -30,6 +30,7 @@ class AlienInvasion:
         # Create the game window
         self.screen = pygame.display.set_mode(
             (self.settings.screen_width, self.settings.screen_height))
+        self.screen_rect = self.screen.get_rect()
 
         # Set the screen title
         pygame.display.set_caption("Alien Invasion")
@@ -38,26 +39,26 @@ class AlienInvasion:
         self.game_state = GameState(self.settings)
 
         # Create the scoreboard
-        self.scoreboard = Scoreboard(self.game_state, self.settings, self.screen)
+        self.scoreboard = Scoreboard(self.game_state, self.settings, self.screen_rect)
 
         # Create the background layer
-        self.background = Background(self.screen)
+        self.background = Background(self.screen_rect)
 
         # Create the ship
-        self.ship = Ship(self.game_state, self.screen)
+        self.ship = Ship(self.game_state, self.screen_rect)
 
         # Create the alien fleet
-        self.alien_fleet = AlienFleet(self.game_state, self.settings, self.screen)
+        self.alien_fleet = AlienFleet(self.game_state, self.settings, self.screen_rect)
 
         # Create the bullet volley
-        self.bullet_volley = BulletVolley(self.game_state, self.settings, self.screen, self.ship)
+        self.bullet_volley = BulletVolley(self.game_state, self.settings, self.ship)
 
         # Create a new manager to resolve collisions between entities
         self.collision_manager = CollisionManager(self.ship, self.bullet_volley, self.alien_fleet, self.game_state,
                                                   self.scoreboard)
 
         # Create a play button
-        self.play_button = Button(self.screen, "Play")
+        self.play_button = Button(self.screen_rect.center, "Play")
 
     def game_over(self):
         """Handles a game over condition"""
@@ -152,23 +153,23 @@ class AlienInvasion:
         self.screen.fill(self.settings.bg_color)
 
         # Draw the background
-        self.background.render()
+        self.background.render(self.screen)
 
         # Draw the scoreboard
-        self.scoreboard.render()
+        self.scoreboard.render(self.screen)
 
         # Add the ship
-        self.ship.render()
+        self.ship.render(self.screen)
 
         # Add the bullets
-        self.bullet_volley.render()
+        self.bullet_volley.render(self.screen)
 
         # Add the aliens
-        self.alien_fleet.render()
+        self.alien_fleet.render(self.screen)
 
         # If the game is not active, draw the play button
         if not self.game_state.is_game_active:
-            self.play_button.render()
+            self.play_button.render(self.screen)
 
         # Make the most recently-drawn screen visible
         pygame.display.flip()

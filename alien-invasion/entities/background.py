@@ -1,24 +1,22 @@
 import pygame
 
-from pygame import Surface
+from pygame import Surface, Rect
 
 
 class Background:
 
-    def __init__(self, screen: Surface):
-        self.__screen = screen
-        self.__screen_rect = screen.get_rect()
+    def __init__(self, bounds: Rect):
 
         # Load the background image
-        self.__stars_image = pygame.image.load("assets/images/bg.png")
-        self.__stars_rect = self.__stars_image.get_rect()
+        self._stars_image = pygame.image.load("assets/images/bg.png")
+        self._stars_rect = self._stars_image.get_rect()
 
         # Load the earth image
-        self.__earth_image = pygame.image.load("assets/images/earth.png")
-        self.__earth_rect = self.__earth_image.get_rect()
-        self.__earth_rect.bottom = self.__screen_rect.bottom + (self.__earth_rect.height / 2)
+        self._earth_image = pygame.image.load("assets/images/earth.png")
+        self._earth_rect = self._earth_image.get_rect()
+        self._earth_rect.bottom = bounds.bottom + (self._earth_rect.height / 2)
 
-    def render(self):
+    def render(self, screen: Surface):
         """Draw the background"""
-        self.__screen.blit(self.__stars_image, self.__stars_rect)
-        self.__screen.blit(self.__earth_image, self.__earth_rect)
+        screen.blit(self._stars_image, self._stars_rect)
+        screen.blit(self._earth_image, self._earth_rect)
