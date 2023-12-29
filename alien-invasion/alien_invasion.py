@@ -111,6 +111,8 @@ class AlienInvasion:
             self.ship.move_right()
         elif event.key == pygame.K_q:
             sys.exit()
+        elif event.key == pygame.K_p:
+            self._start_game()
         elif event.key == pygame.K_SPACE:
             self.bullet_volley.add_bullet()
 
