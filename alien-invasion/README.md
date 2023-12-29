@@ -20,3 +20,5 @@ understanding (or otherwise which come from a deeper understanding) of Python.
   via https://creativecommons.org/licenses/by/3.0/)
 
 * Retro game font from https://opengameart.org/content/font-retrospace
+
+* Bullet graphic from https://opengameart.org/content/assets-free-laser-bullets-pack-2020

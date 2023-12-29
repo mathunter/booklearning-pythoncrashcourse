@@ -18,16 +18,21 @@ class BulletVolley:
         # Create a group for the bullets in the volley
         self.bullets = pygame.sprite.Group()
 
+        # Load the image and bounding rect of the bullet
+        self._bullet_image = pygame.image.load("assets/images/bullet.png").convert_alpha()
+        self._bullet_image = pygame.transform.scale_by(self._bullet_image, .5)
+        self._bullet_rect = self._bullet_image.get_rect()
+
     def add_bullet(self):
         """Creates a new bullet and adds it to the group"""
         if self._game_state.is_game_active and len(self.bullets) < self._settings.bullets_allowed:
-            new_bullet = Bullet(self._game_state, self._settings, self._ship.rect.midtop)
+            new_bullet = Bullet(self._game_state, self._bullet_rect, self._ship.rect.midtop)
             self.bullets.add(new_bullet)
 
     def render(self, screen: Surface):
         """Draws the bullets to the screen"""
         for bullet in self.bullets.sprites():
-            bullet.draw_bullet(screen)
+            screen.blit(self._bullet_image, bullet.rect)
 
     def reset(self):
         """Resets this instance"""
