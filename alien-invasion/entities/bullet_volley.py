@@ -3,8 +3,8 @@ from pygame import Surface
 
 from entities.bullet import Bullet
 from entities.game_state import GameState
-from settings import Settings
 from entities.ship import Ship
+from settings import Settings
 
 
 class BulletVolley:

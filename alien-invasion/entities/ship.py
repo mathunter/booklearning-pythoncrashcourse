@@ -11,6 +11,7 @@ class Ship:
 
         self.__game_state = game_state
         self.__screen = screen
+        self.__screen_rect = screen.get_rect()
 
         # Movement directions
         self.__moving_right = False
@@ -62,5 +63,5 @@ class Ship:
 
     def _center_ship(self):
         """Re-centers the ship in the middle of the screen"""
-        self.rect.midbottom = self.__screen_rect.midbottom
+        self.rect.midbottom = (self.__screen_rect.midbottom[0], self.__screen_rect.midbottom[1] - 10)
         self.x = float(self.rect.x)
