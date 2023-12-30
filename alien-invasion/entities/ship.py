@@ -9,10 +9,10 @@ class Ship:
 
     MARGIN_BOTTOM = 10
 
-    def __init__(self, game_state: GameState, bounds: Rect):
+    def __init__(self, game_state: GameState, game_bounds: Rect):
 
         self._game_state = game_state
-        self._bounds = bounds
+        self._game_bounds = game_bounds
 
         # Movement directions
         self._moving_right = False
@@ -51,9 +51,9 @@ class Ship:
         """Update the ship's position based on the movement flags"""
 
         # Move left or right depending on the flags
-        if self._moving_right and self.rect.right < self._bounds.right:
+        if self._moving_right and self.rect.right < self._game_bounds.right:
             self.x += self._game_state.ship_speed
-        elif self._moving_left and self.rect.left > self._bounds.left:
+        elif self._moving_left and self.rect.left > self._game_bounds.left:
             self.x -= self._game_state.ship_speed
 
         # Update the rect from the ship location
@@ -61,5 +61,5 @@ class Ship:
 
     def _center_ship(self):
         """Re-centers the ship in the middle of the screen"""
-        self.rect.midbottom = (self._bounds.centerx, self._bounds.bottom - self.MARGIN_BOTTOM)
+        self.rect.midbottom = (self._game_bounds.centerx, self._game_bounds.bottom - self.MARGIN_BOTTOM)
         self.x = float(self.rect.x)
